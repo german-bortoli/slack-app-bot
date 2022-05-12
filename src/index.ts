@@ -1,7 +1,10 @@
 import 'dotenv/config'; // To use our .env
 import { App, LogLevel } from '@slack/bolt';
+import { In } from 'typeorm';
 import { isGenericMessageEvent } from './utils';
 import { isExternalEmailFromDomain } from './services';
+import { AppDataSource } from './data-source';
+import { Message as MessageEntity, MessageStatus } from './entities/message';
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -13,6 +16,9 @@ const app = new App({
 
 // All the room in the world for your code
 (async () => {
+
+  await AppDataSource.initialize();
+
   // Will listen for every single message from the app.
   app.event('message', async ({ client, logger, message, context }) => {
     // Filter out message events with subtypes (see https://api.slack.com/events/message)
@@ -46,6 +52,17 @@ const app = new App({
       }
 
       logger.debug('External User >>> ', userResponse.user);
+      logger.debug('Message >>> ', message)
+
+      // @TODO: move this into services
+      const msgRecord = new MessageEntity();
+      msgRecord.user = message.user;
+      msgRecord.clientMessageId = message.client_msg_id || '';
+      msgRecord.messageText = message.text || '';
+      msgRecord.messageTs =  Number(message.ts);
+      msgRecord.channel = message.channel;
+
+      AppDataSource.manager.save(msgRecord);
     } catch (error) {
       logger.error(error);
     }
@@ -53,6 +70,14 @@ const app = new App({
 
   app.event('app_home_opened', async ({ event, client, logger }) => {
     try {
+      const messageRepository = AppDataSource.getRepository(MessageEntity);
+      const messages = await messageRepository.find({ 
+        where: { status: In([MessageStatus.NEW, MessageStatus.OPEN]) },
+        order: { messageTs: 'ASC' },
+      });
+
+      logger.debug('Messages >>> ', messages);
+
       // Call views.publish with the built-in client
       const result = await client.views.publish({
         // Use the user ID associated with the event

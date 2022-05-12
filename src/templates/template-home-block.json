@@ -62,7 +62,7 @@
             "value": "complete"
           }
         ],
-        "action_id": "action-set-status"
+        "action_id": "action-set-status-[MESSAGE_ID]"
       }
     },
     {
