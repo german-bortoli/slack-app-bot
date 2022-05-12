@@ -8,8 +8,6 @@ Install Slack on your device and create a [new workspace](https://slack.com/crea
 
 Next, Slack will prompt you to enter the name of the project you’re working on. You can call the project whatever you want. You can skip the last step where Slack prompts you to add other team members.
 
-> NOTE : A version without rust compiler [swc](https://swc.rs/) is available [here](https://github.com/maxgfr/boilerplate-typescript-node).
-
 ## Create a new Slack application
 
 Now, we’ll create a new Slack app. Slack apps are small applications that provide specific functionalities within a workspace. You can install a preexisting Slack application by signing into your Slack workspace and searching for applications within the Slack app directory.
@@ -57,6 +55,8 @@ yarn dev # For running the code in development thanks to swc and nodemon
 yarn test # For running unit test
 yarn test:watch # For watching unit test
 ```
+
+> Note: This uses rust compiler [SWC](https://swc.rs/)
 
 ----------------
 
