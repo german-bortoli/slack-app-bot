@@ -20,13 +20,13 @@ Then select the option to create "From an app manifest", select the workspace, a
 
 ### Configure your environment
 
-Into your slack application settings, select `OAuth & Permissions` and copy the value of `Bot User OAuth Token`.
-Then go to general and scroll down until App Level Tokens, generate one with the scope `connections:write` and copy the token information
-In the same general section scroll to `App Credentials` and copy the value of `Signing Secret`
+- Into your slack application settings, select `OAuth & Permissions` and copy the value of `Bot User OAuth Token`.
+- Then go to general and scroll down until App Level Tokens, generate one with the scope `connections:write` and copy the token information
+- In the same general section scroll to `App Credentials` and copy the value of `Signing Secret`
 
 When you have those 3 tokens copied it's time to generate an `.env` file into the root of this project.
 
-.env file
+`.env file` content:
 
 ```
 SLACK_BOT_TOKEN=<Value of Bot User OAuth Token>
