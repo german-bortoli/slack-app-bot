@@ -15,6 +15,19 @@ export const extractEmailDomain = (email: string): string => {
 };
 
 /**
+ * Check if the email is from the organization domain
+ * @param email
+ * @param domain
+ * @returns boolean
+ */
+const isEmailFromOrganizationDomain = (
+  email: string,
+  domain: string,
+): boolean => {
+  return extractEmailDomain(email).toLowerCase() === domain.toLowerCase();
+};
+
+/**
  * Check if the user email domain is different from the team domain
  * @param userEmail
  * @param teamDomain
@@ -24,5 +37,5 @@ export const isExternalEmailFromDomain = (
   email: string,
   domain: string,
 ): boolean => {
-  return extractEmailDomain(email).toLowerCase() !== domain.toLowerCase();
+  return !isEmailFromOrganizationDomain(email, domain);
 };

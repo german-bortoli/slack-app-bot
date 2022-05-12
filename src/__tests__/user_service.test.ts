@@ -1,4 +1,4 @@
-import { isExternalEmailFromDomain } from '../services';
+import { isExternalEmailFromDomain } from '../utils';
 
 describe('User service methods', () => {
   it('Email is from the organization domain', () => {
