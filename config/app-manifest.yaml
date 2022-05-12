@@ -1,0 +1,48 @@
+## Use this manifest to generate the application correctly
+## Feel free to modify the name of the org.
+display_information:
+  name: MyOrganizationIncomingMessages
+features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: false
+  bot_user:
+    display_name: DaBot
+    always_online: true
+oauth_config:
+  scopes:
+    user:
+      - chat:write
+      - groups:history
+      - im:history
+      - channels:history
+    bot:
+      - app_mentions:read
+      - channels:join
+      - channels:read
+      - chat:write
+      - conversations.connect:read
+      - groups:history
+      - im:history
+      - team:read
+      - users:read
+      - users:read.email
+      - channels:history
+settings:
+  event_subscriptions:
+    user_events:
+      - message.channels
+      - message.groups
+      - message.im
+    bot_events:
+      - app_home_opened
+      - app_mention
+      - message.channels
+      - message.groups
+      - message.im
+  interactivity:
+    is_enabled: true
+  org_deploy_enabled: false
+  socket_mode_enabled: true
+  token_rotation_enabled: false
