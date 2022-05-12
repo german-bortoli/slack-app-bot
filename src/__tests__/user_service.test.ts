@@ -13,19 +13,9 @@ describe('User service methods', () => {
     ).toBeTruthy();
   });
 
-  it('Undefined user email', () => {
-    expect(isExternalEmailFromDomain(undefined, 'myorg.com')).toBeTruthy();
-  });
-
-  it('Undefined domain', () => {
-    expect(isExternalEmailFromDomain('jhon@myOrg.com', undefined)).toBeTruthy();
-  });
-
-  it('Undefined user email and domain', () => {
-    expect(isExternalEmailFromDomain(undefined, undefined)).toBeTruthy();
-  });
-
   it('Email is not a valid one', () => {
-    expect(isExternalEmailFromDomain('justOneString', 'myorg.com')).toBeTruthy();
+    expect(
+      isExternalEmailFromDomain('justOneString', 'myorg.com'),
+    ).toBeTruthy();
   });
 });

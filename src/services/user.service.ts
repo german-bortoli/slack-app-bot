@@ -21,12 +21,8 @@ export const extractEmailDomain = (email: string): string => {
  * @returns boolean
  */
 export const isExternalEmailFromDomain = (
-  email: string | undefined,
-  domain: string | undefined,
+  email: string,
+  domain: string,
 ): boolean => {
-  if (!email || !domain) {
-    return true;
-  }
-
   return extractEmailDomain(email).toLowerCase() !== domain.toLowerCase();
 };

@@ -13,7 +13,6 @@ const app = new App({
 
 // All the room in the world for your code
 (async () => {
-
   // Will listen for every single message from the app.
   app.event('message', async ({ client, logger, message, context }) => {
     // Filter out message events with subtypes (see https://api.slack.com/events/message)
@@ -31,11 +30,16 @@ const app = new App({
       // Fetch team information from Slack to get the organization domain
       const teamResponse = await client.team.info({ team: context.teamId });
 
+      // Check that user email and team domain are fetched properly
+      if (!userResponse.user?.profile?.email || !teamResponse?.team?.domain) {
+        return;
+      }
+
       // If the user email is the same from the organization domain, ignore the process
       if (
         !isExternalEmailFromDomain(
-          userResponse.user?.profile?.email,
-          teamResponse?.team?.domain,
+          userResponse.user.profile.email,
+          teamResponse.team.domain,
         )
       ) {
         return;
