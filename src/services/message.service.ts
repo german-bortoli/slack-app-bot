@@ -1,4 +1,4 @@
-import { GenericMessageEvent } from '@slack/bolt';
+import { BlockStaticSelectAction, GenericMessageEvent } from '@slack/bolt';
 import { In } from 'typeorm';
 import { AppDataSource } from '../data-source';
 import { Message as MessageEntity, MessageStatus } from '../entities/message';
@@ -31,4 +31,23 @@ export const storeMessage = async (
   dbMessage.channel = msg.channel;
 
   return AppDataSource.manager.save(dbMessage);
+};
+
+export const updateMessageFromActionBody = async (
+  body: BlockStaticSelectAction,
+): Promise<MessageEntity> | never => {
+  if (body.actions.length === 0) {
+    throw new Error('No action found');
+  }
+
+  const action = body.actions[0];
+  const messageId = action.action_id.split('-')[1];
+  const messageRepository = AppDataSource.getRepository(MessageEntity);
+  const message = await messageRepository.findOneBy({ id: Number(messageId) });
+  if (!message) {
+    throw new Error('Message not found');
+  }
+
+  message.status = action?.selected_option.value;
+  return messageRepository.save(message);
 };

@@ -1,7 +1,17 @@
 import 'dotenv/config'; // To use our .env
-import { App, LogLevel } from '@slack/bolt';
+import {
+  App,
+  BlockAction,
+  BlockStaticSelectAction,
+  LogLevel,
+  UsersSelectAction,
+} from '@slack/bolt';
 import { isGenericMessageEvent, isExternalEmailFromDomain } from './utils';
-import { publishHomeForUser, storeMessage } from './services';
+import {
+  publishHomeForUser,
+  storeMessage,
+  updateMessageFromActionBody,
+} from './services';
 import { AppDataSource } from './data-source';
 
 const app = new App({
@@ -16,7 +26,9 @@ const app = new App({
 (async () => {
   await AppDataSource.initialize();
 
-  // Will listen for every single message from the app.
+  /**
+   * Message listener, will be called everytime a message is sent to any channel or group
+   */
   app.event('message', async ({ client, logger, message, context }) => {
     // Filter out message events with subtypes (see https://api.slack.com/events/message)
     // Is there a way to do this in listener middleware with current type system?
@@ -52,19 +64,39 @@ const app = new App({
       const messageRecord = await storeMessage(message);
       logger.debug('Message stored >>> ', messageRecord);
     } catch (error) {
-      logger.error(error);
+      logger.error('Error on event message:', error);
     }
   });
 
+  /**
+   * Home view action listener, will be called everytime a user clicks on the home view
+   */
   app.event('app_home_opened', async ({ event, client, logger }) => {
     try {
       // Fetch all the new and open messages
       const homeViewResponse = await publishHomeForUser(event.user, client);
       logger.debug('Home view published >>> ', homeViewResponse);
     } catch (error) {
-      logger.error(error);
+      logger.error('Error while processing home view', error);
     }
   });
+
+  /**
+   * Block action listener, will be called everytime a user clicks on the picklist action
+   */
+  app.action<BlockStaticSelectAction>(
+    { type: 'block_actions', action_id: /messageSetStatus-(\d+)/ },
+    async ({ ack, body, client, logger }) => {
+      try {
+        const message = await updateMessageFromActionBody(body);
+        await publishHomeForUser(body.user.id, client);
+        logger.debug('Message status updated >>> ', message);
+        ack();
+      } catch (error) {
+        logger.error('Error on action message status:', error);
+      }
+    },
+  );
 
   // Start your app
   await app.start(Number(process.env.PORT) || 3000);
