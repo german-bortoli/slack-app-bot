@@ -1,10 +1,8 @@
 import 'dotenv/config'; // To use our .env
 import {
   App,
-  BlockAction,
   BlockStaticSelectAction,
   LogLevel,
-  UsersSelectAction,
 } from '@slack/bolt';
 import { isGenericMessageEvent, isExternalEmailFromDomain } from './utils';
 import {
@@ -14,6 +12,9 @@ import {
 } from './services';
 import { AppDataSource } from './data-source';
 
+/**
+ * Initialize slack application with our environment variables
+ */
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   appToken: process.env.SLACK_APP_TOKEN,

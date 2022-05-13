@@ -33,6 +33,12 @@ export const storeMessage = async (
   return AppDataSource.manager.save(dbMessage);
 };
 
+/**
+ * Update messages from action picker
+ * 
+ * @param body 
+ * @returns 
+ */
 export const updateMessageFromActionBody = async (
   body: BlockStaticSelectAction,
 ): Promise<MessageEntity> | never => {

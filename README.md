@@ -79,3 +79,9 @@ When messages come in, they default to a "New" status
 
 In the Slack app Home tab, users can see the messages that have come in, and they can use a picklist to choose 2 other statuses: "Open" or "Complete"
 When the message status is moved to "Complete," the messages are hidden from the Home tab view.
+
+----------------
+
+## Some screenshots
+
+![Home Screenshot](./screenshots/app-home-view.png)
