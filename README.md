@@ -12,8 +12,6 @@ Next, Slack will prompt you to enter the name of the project you’re working on
 
 Now, we’ll create a new Slack app. Slack apps are small applications that provide specific functionalities within a workspace. You can install a preexisting Slack application by signing into your Slack workspace and searching for applications within the Slack app directory.
 
-The Slack app we’ll create is a knowledge base that helps employees within our fictional organization quickly find answers to FAQs.
-
 To create a new Slack application, head to the [Slack API](https://api.slack.com/apps/) dashboard. Click the Create New App button on the top right.
 
 Then select the option to create "From an app manifest", select the workspace, and paste the YAML file located in [./config/app-manifest.yaml](./config/app-manifest.yaml)
