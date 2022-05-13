@@ -5,7 +5,7 @@ describe('Blocks helper', () => {
   it('should return a blocks object', () => {
     const messages: Message[] = [];
     const blocks = blocksFromMessages(messages);
-    console.log(blocks);
+    
     expect(blocks).toHaveLength(1);
     expect(blocks[0].type).toBe('section');
     expect(JSON.stringify(blocks[0])).toContain(
