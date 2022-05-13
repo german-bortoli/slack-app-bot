@@ -84,4 +84,4 @@ When the message status is moved to "Complete," the messages are hidden from the
 
 ## Some screenshots
 
-![Home Screenshot](./screenshots/app-home-view.png)
+![App Home](screenshots/app-home-view.png?raw=true "App Home")
