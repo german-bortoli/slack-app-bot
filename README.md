@@ -33,6 +33,10 @@ SLACK_BOT_TOKEN=<Value of Bot User OAuth Token>
 SLACK_APP_TOKEN=<Value of App-Level Tokens>
 SLACK_SIGNING_SECRET=<Value of Signign Secret>
 ```
+
+## Database
+
+Since this project is pretty much an MVP, I decided to use SQLite to simplify things, please don't use this in production.
 ## Running the code
 
 ```sh
