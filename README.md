@@ -34,7 +34,8 @@ SLACK_SIGNING_SECRET=<Value of Signign Secret>
 
 ## Database
 
-Since this project is pretty much an MVP, I decided to use SQLite to simplify things, please don't use this in production.
+🛑  Since this project is pretty much an MVP, I decided to use SQLite to simplify things, please *DON'T USE THIS ON PRODUCTION*. 🛑
+
 ## Running the code
 
 ```sh
