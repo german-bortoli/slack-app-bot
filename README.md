@@ -4,7 +4,7 @@
 
 To get started, we’ll need a workspace to install our bot in. A [Slack workspace](https://slack.com/intl/en-ng/help/articles/212675257-Join-a-Slack-workspace#:~:text=A%20Slack%20workspace%20is%20made,separate%20account%20for%20each%20one.) is a way to group communication within an organization. Everyone in an organization can belong to one workspace, which is then subdivided into multiple channels.
 
-Install Slack on your device and create a [new workspace](https://slack.com/create#email). Slack will then send a 6-digit code to your email that you can use for verification. Now for the fun part! Give your workspace a name; for this tutorial, we’ll create a fictional company called The Zobo Tea Company.
+Install Slack on your device and create a [new workspace](https://slack.com/create#email). Slack will then send a 6-digit code to your email that you can use for verification. Now for the fun part! Give your workspace a name; for this tutorial, we’ll create a fictional company called DaCompany.
 
 Next, Slack will prompt you to enter the name of the project you’re working on. You can call the project whatever you want. You can skip the last step where Slack prompts you to add other team members.
 
