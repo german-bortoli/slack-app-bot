@@ -1,7 +1,13 @@
-import { BlockStaticSelectAction, GenericMessageEvent } from '@slack/bolt';
+import {
+  BlockStaticSelectAction,
+  GenericMessageEvent,
+  MessageEvent,
+} from '@slack/bolt';
+import { WebClient } from '@slack/web-api';
 import { In } from 'typeorm';
 import { AppDataSource } from '../data-source';
 import { Message as MessageEntity, MessageStatus } from '../entities/message';
+import { isMessageFromChannel } from '../utils';
 
 /**
  * Get all new and open messages sorted by date
@@ -35,9 +41,9 @@ export const storeMessage = async (
 
 /**
  * Update messages from action picker
- * 
- * @param body 
- * @returns 
+ *
+ * @param body
+ * @returns
  */
 export const updateMessageFromActionBody = async (
   body: BlockStaticSelectAction,
@@ -56,4 +62,33 @@ export const updateMessageFromActionBody = async (
 
   message.status = action?.selected_option.value;
   return messageRepository.save(message);
+};
+
+/**
+ * Check if the bot is member of the message channel
+ *
+ * @param client
+ * @param msg
+ * @returns
+ */
+export const validateChannelMessageForBot = async (
+  client: WebClient,
+  msg: MessageEvent,
+): Promise<boolean> => {
+  if (!isMessageFromChannel(msg)) {
+    return false;
+  }
+
+  try {
+    const channels = await client.conversations.list();
+    const channel = channels.channels?.find((c) => c.id === msg.channel);
+
+    if (!channel) {
+      return false;
+    }
+
+    return channel.is_member || false;
+  } catch (error) {
+    return false;
+  }
 };

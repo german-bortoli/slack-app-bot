@@ -4,11 +4,11 @@ import { Message } from '../entities/message';
 
 type Blocks = (SectionBlock | Block | KnownBlock)[];
 
-export const getDivider = () => ({type: 'divider'});
+export const getDivider = () => ({ type: 'divider' });
 
 /**
  * Fetch an empty block for home view
- * @returns 
+ * @returns
  */
 export const getBlocksForEmptyMessage = (): Blocks => {
   return [
@@ -24,8 +24,8 @@ export const getBlocksForEmptyMessage = (): Blocks => {
 
 /**
  * Generate block message from a message
- * @param message 
- * @returns 
+ * @param message
+ * @returns
  */
 export const getBlockMessage = (message: Message): Blocks => {
   const messageFriendlyTime = moment(message.messageTs * 1000).fromNow();
@@ -96,8 +96,8 @@ export const getBlockMessage = (message: Message): Blocks => {
 
 /**
  * Get blocks section for all messages
- * @param messages 
- * @returns 
+ * @param messages
+ * @returns
  */
 export const blocksFromMessages = (messages: Message[]): Blocks => {
   if (messages.length === 0) {

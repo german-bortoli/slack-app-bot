@@ -5,7 +5,7 @@ describe('Blocks helper', () => {
   it('should return a blocks object', () => {
     const messages: Message[] = [];
     const blocks = blocksFromMessages(messages);
-    
+
     expect(blocks).toHaveLength(1);
     expect(blocks[0].type).toBe('section');
     expect(JSON.stringify(blocks[0])).toContain(
@@ -14,7 +14,8 @@ describe('Blocks helper', () => {
   });
 
   it('Should have a block id', () => {
-    const messages: Message[] = [{
+    const messages: Message[] = [
+      {
         id: 1,
         user: 'U0G9QF9S',
         channel: 'C0G9QF9S',
@@ -22,8 +23,8 @@ describe('Blocks helper', () => {
         messageText: 'test',
         status: 'new',
         clientMessageId: 'aa-11',
-    },
-    {
+      },
+      {
         id: 2,
         user: 'U0G9QF9S',
         channel: 'C0G9QF9S',
@@ -31,7 +32,8 @@ describe('Blocks helper', () => {
         messageText: 'test2',
         status: 'new',
         clientMessageId: 'bb-22',
-    }]
+      },
+    ];
     const blocks = blocksFromMessages(messages);
     expect(blocks).toHaveLength(4); // 2 messages + 2 divider
     expect(blocks[0].block_id).toBe('message-aa-11');

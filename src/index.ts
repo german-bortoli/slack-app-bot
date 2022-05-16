@@ -1,14 +1,11 @@
 import 'dotenv/config'; // To use our .env
-import {
-  App,
-  BlockStaticSelectAction,
-  LogLevel,
-} from '@slack/bolt';
+import { App, BlockStaticSelectAction, LogLevel } from '@slack/bolt';
 import { isGenericMessageEvent, isExternalEmailFromDomain } from './utils';
 import {
   publishHomeForUser,
   storeMessage,
   updateMessageFromActionBody,
+  validateChannelMessageForBot,
 } from './services';
 import { AppDataSource } from './data-source';
 
@@ -34,6 +31,12 @@ const app = new App({
     // Filter out message events with subtypes (see https://api.slack.com/events/message)
     // Is there a way to do this in listener middleware with current type system?
     if (!isGenericMessageEvent(message)) {
+      return;
+    }
+
+    const isBotInChannel = await validateChannelMessageForBot(client, message);
+
+    if (!isBotInChannel) {
       return;
     }
 
