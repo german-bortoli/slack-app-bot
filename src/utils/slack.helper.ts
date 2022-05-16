@@ -7,8 +7,8 @@ import {
 
 /**
  * Check if the message is a generic message event
- * @param msg 
- * @returns 
+ * @param msg
+ * @returns
  */
 export const isGenericMessageEvent = (
   msg: MessageEvent,
@@ -17,10 +17,20 @@ export const isGenericMessageEvent = (
 
 /**
  * Check if the message is a message item
- * @param item 
- * @returns 
+ * @param item
+ * @returns
  */
 export const isMessageItem = (
   item: ReactionAddedEvent['item'],
 ): item is ReactionMessageItem =>
   (item as ReactionMessageItem).type === 'message';
+
+/**
+ * Check if the message is from a channel type
+ *
+ * @param msg
+ * @returns
+ */
+export const isMessageFromChannel = (msg: MessageEvent): boolean => {
+  return msg.channel_type === 'channel';
+};
